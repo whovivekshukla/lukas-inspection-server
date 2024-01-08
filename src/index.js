@@ -86,8 +86,14 @@ app.get("/api/inspection/:id", async (req, res) => {
   });
 });
 
-const server = app.listen(3000, () =>
-  console.log(`
-🚀 Server ready at: http://localhost:3000
-⭐️ See sample requests: http://pris.ly/e/js/rest-express#3-using-the-rest-api`)
-);
+const port = process.env.PORT || 3000;
+
+const start = async () => {
+  try {
+    app.listen(port, console.log(`Server is listening at ${port}`));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
