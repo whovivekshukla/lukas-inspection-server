@@ -24,6 +24,19 @@ app.get("/api/inspection/:id", async (req, res) => {
     return res.json({ msg: "Mission Not Found" });
   }
 
+  const token = req.headers.authorization;
+
+  const checkToken = await prisma.mission.findFirst({
+    where: {
+      id: mission.id,
+      cronJobToken: token,
+    },
+  });
+
+  if (!checkToken) {
+    return res.json({ msg: "Unauthorized" });
+  }
+
   const checkInspectionLog = await prisma.inspectionLog.findFirst({
     where: {
       missionId: mission.id,
