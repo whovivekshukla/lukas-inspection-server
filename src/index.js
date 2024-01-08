@@ -8,6 +8,10 @@ const app = express();
 
 app.use(express.json());
 
+app.get("/", async (req, res) => {
+  return res.json({ msg: "Welcome to Lukas Inspection Server API" });
+});
+
 app.get("/api/inspection/:id", async (req, res) => {
   const params = req.params;
   const mission = await prisma.mission.findUnique({
