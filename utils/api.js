@@ -9,7 +9,7 @@ const {
   disarmDrone,
 } = require("./FlytBaseAPIs/api");
 
-const performInspection = async (position, logCallback) => {
+const performInspection = async (mission, logCallback) => {
   let resArray = [];
   try {
     resArray.push(" Access Request");
@@ -24,12 +24,12 @@ const performInspection = async (position, logCallback) => {
 
     resArray.push("Taking Off...");
     logCallback("Taking Off...");
-    const takeOffRes = await takeOff();
+    const takeOffRes = await takeOff(mission.altitude);
     logCallback(takeOffRes);
 
     resArray.push("Setting Waypoint...");
     logCallback("Setting Waypoint...");
-    const setWayPointRes = await setWayPoint(position);
+    const setWayPointRes = await setWayPoint(mission.waypoints);
     logCallback(setWayPointRes);
 
     resArray.push("Executing Waypoints...");

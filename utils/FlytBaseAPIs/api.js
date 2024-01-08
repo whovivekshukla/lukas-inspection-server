@@ -61,10 +61,10 @@ const disarmDrone = async () => {
   }
 };
 
-const takeOff = async () => {
+const takeOff = async (altitude) => {
   try {
     const response = await customAxios.post("flytos/navigation/take_off", {
-      takeoff_alt: 10,
+      takeoff_alt: altitude,
     });
 
     // console.log("API Response Data:", response.data.message);

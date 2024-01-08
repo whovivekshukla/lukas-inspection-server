@@ -67,7 +67,7 @@ app.get("/api/inspection/:id", async (req, res) => {
   });
 
   const resArray = [];
-  const result = await performInspection(mission.waypoints, async (log) => {
+  const result = await performInspection(mission, async (log) => {
     resArray.push(log);
   });
 
