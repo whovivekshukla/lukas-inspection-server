@@ -29,7 +29,7 @@ app.get("/api/inspection/:id", async (req, res) => {
   const checkToken = token === mission.cronJobToken;
 
   if (!checkToken) {
-    throw new Error("Unauthorized");
+    return res.json({ msg: "Unauthorized" });
   }
 
   const checkInspectionLog = await prisma.inspectionLog.findFirst({
