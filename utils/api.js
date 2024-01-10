@@ -70,14 +70,10 @@ export const deleteCronJob = async (cronJobId) => {
       const responseData = await res.json();
       return responseData;
     } else {
-      // Handle non-ok responses
       console.error("Failed to delete cron job:", res.status, res.statusText);
-      throw new Error(
-        `Failed to delete cron job: ${res.status} ${res.statusText}`
-      );
     }
   } catch (error) {
-    console.error("Error creating cron job:", error);
+    console.error("Error deleting cron job:", error);
   }
 };
 
