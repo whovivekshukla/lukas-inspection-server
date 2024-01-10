@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
-const { performInspection } = require("../utils/api");
+const { performInspection, deleteCronJob } = require("../utils/api");
 
 const prisma = new PrismaClient();
 const app = express();
@@ -83,6 +83,22 @@ app.get("/api/inspection/:id", async (req, res) => {
   await prisma.mission.update({
     data: {
       status: "completed",
+    },
+    where: {
+      id: mission.id,
+    },
+  });
+
+  // delete the cron job
+
+  await deleteCronJob(mission.cronJobId);
+
+  // make the cronJobID field and cronToken Field null
+
+  await prisma.mission.update({
+    data: {
+      cronJobId: null,
+      cronJobToken: null,
     },
     where: {
       id: mission.id,

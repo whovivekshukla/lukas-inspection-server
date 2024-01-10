@@ -60,6 +60,27 @@ const performInspection = async (mission, logCallback) => {
   }
 };
 
+export const deleteCronJob = async (cronJobId) => {
+  try {
+    const res = await fetch(`https://api.cron-job.org/jobs/${cronJobId}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      const responseData = await res.json();
+      return responseData;
+    } else {
+      // Handle non-ok responses
+      console.error("Failed to delete cron job:", res.status, res.statusText);
+      throw new Error(
+        `Failed to delete cron job: ${res.status} ${res.statusText}`
+      );
+    }
+  } catch (error) {
+    console.error("Error creating cron job:", error);
+  }
+};
+
 module.exports = {
   performInspection,
 };
