@@ -60,7 +60,7 @@ const performInspection = async (mission, logCallback) => {
   }
 };
 
-export const deleteCronJob = async (cronJobId) => {
+const deleteCronJob = async (cronJobId) => {
   try {
     const res = await fetch(`https://api.cron-job.org/jobs/${cronJobId}`, {
       method: "DELETE",
@@ -79,4 +79,5 @@ export const deleteCronJob = async (cronJobId) => {
 
 module.exports = {
   performInspection,
+  deleteCronJob,
 };
