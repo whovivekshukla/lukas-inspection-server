@@ -64,6 +64,9 @@ const deleteCronJob = async (cronJobId) => {
   try {
     const res = await fetch(`https://api.cron-job.org/jobs/${cronJobId}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${process.env.CRON_JOB_API_KEY}`,
+      },
     });
 
     if (res.ok) {
