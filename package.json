@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "npx prisma generate && node src/index.js"
+    "start": "npm install && npx prisma generate && node src/index.js"
   },
   "dependencies": {
     "@prisma/client": "5.7.1",
@@ -15,8 +15,5 @@
   },
   "devDependencies": {
     "prisma": "5.7.1"
-  },
-  "prisma": {
-    "seed": "node prisma/seed.js"
   }
 }
