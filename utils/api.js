@@ -12,6 +12,10 @@ const {
 const performInspection = async (mission, logCallback) => {
   let resArray = [];
   try {
+    resArray.push("Arming Drone...");
+    logCallback("Arming Drone...");
+    const armDroneRes = await armDrone();
+    logCallback(armDroneRes);
 
     resArray.push("Setting Waypoint...");
     logCallback("Setting Waypoint...");
