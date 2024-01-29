@@ -71,11 +71,39 @@ app.get("/api/inspection/:id", async (req, res) => {
     resArray.push(log);
   });
 
+  // temp data for the objectDetection, will be replaced with the actual data if someone wants to use it
+
+  const videoURL = "https://www.youtube.com/watch?v=L0p5f3ITi10";
+  const videoObjectDetectionData = [
+    "person",
+    "pants",
+    "shoe",
+    "person",
+    "helmet",
+    "pants",
+    "person",
+    "clothing",
+    "t-shirt",
+    "clothing",
+    "skateboard",
+    "person",
+    "clothing",
+    "top",
+    "person",
+    "person",
+    "person",
+    "pants",
+    "top",
+    "sneakers",
+  ];
+
   // Create inspection log
   const newInspection = await prisma.inspectionLog.create({
     data: {
       missionId: mission.id,
       data: resArray,
+      videoURL,
+      videoObjectDetectionData,
     },
   });
 
