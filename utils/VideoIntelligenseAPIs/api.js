@@ -1,4 +1,6 @@
-const keyFilename = "C://Users/vivek//Desktop/lukas-412609-4be886ea6fc0.json";
+const credential = JSON.parse(
+  Buffer.from(process.env.GOOGLE_SERVICE_KEY, "base64").toString()
+);
 
 const {
   VideoIntelligenceServiceClient,
@@ -10,7 +12,13 @@ async function analyzeVideo(
   locationId = "us-east1"
 ) {
   const uniqueDescriptions = new Set();
-  const video = new VideoIntelligenceServiceClient({ keyFilename });
+  const video = new VideoIntelligenceServiceClient({
+    projectId: credential.project_id,
+    credentials: {
+      client_email: credential.client_email,
+      private_key: credential.private_key,
+    },
+  });
 
   const request = {
     inputUri: gcsUri,
@@ -41,8 +49,11 @@ const { Storage } = require("@google-cloud/storage");
 
 // Google Cloud Storage credentials
 const storage = new Storage({
-  projectId: "lukas-412609",
-  keyFilename,
+  projectId: credential.project_id,
+  credentials: {
+    client_email: credential.client_email,
+    private_key: credential.private_key,
+  },
 });
 
 async function saveVideoToStorage(endpoint, bucketName, destinationFileName) {
