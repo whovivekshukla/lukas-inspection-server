@@ -1,10 +1,17 @@
 require("dotenv").config();
+
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const { performInspection, deleteCronJob } = require("../utils/api");
+const {
+  saveVideoToStorage,
+  analyzeVideo,
+} = require("../utils/VideoIntelligenseAPIs/api");
 
 const prisma = new PrismaClient();
 const app = express();
+
+const { sendEmail } = require("../utils/Resend/api");
 
 app.use(express.json());
 
@@ -97,13 +104,44 @@ app.get("/api/inspection/:id", async (req, res) => {
     "sneakers",
   ];
 
+  // performing footage object detection
+
+  const videoLink =
+    "https://github.com/intel-iot-devkit/sample-videos/raw/master/face-demographics-walking.mp4";
+  const bucketName = "lukas-demo-video";
+  const destinationFileName = mission.id;
+
+  const gsLink = await saveVideoToStorage(
+    videoLink,
+    bucketName,
+    destinationFileName
+  );
+
+  const objectDetectionData = await analyzeVideo(gsLink);
+
+  const personDetected = objectDetectionData.some((detectionResult) =>
+    detectionResult.includes("person")
+  );
+
+  // if 'person' detected sending email for detection
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: mission.userId,
+    },
+  });
+
+  if (personDetected) {
+    sendEmail(user.email, mission.name);
+  }
+
   // Create inspection log
   const newInspection = await prisma.inspectionLog.create({
     data: {
       missionId: mission.id,
       data: resArray,
-      videoURL,
-      videoObjectDetectionData,
+      videoURL: gsLink,
+      videoObjectDetectionData: objectDetectionData,
     },
   });
 
@@ -138,7 +176,7 @@ app.get("/api/inspection/:id", async (req, res) => {
   });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {

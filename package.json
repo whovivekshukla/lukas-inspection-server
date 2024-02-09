@@ -7,11 +7,14 @@
     "start": "npm install && npx prisma generate && node src/index.js"
   },
   "dependencies": {
+    "@google-cloud/storage": "^7.7.0",
+    "@google-cloud/video-intelligence": "^5.0.2",
     "@prisma/client": "^5.9.1",
     "axios": "^1.6.5",
     "dotenv": "^16.3.1",
     "express": "4.18.2",
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "resend": "^3.1.0"
   },
   "devDependencies": {
     "prisma": "^5.9.1"
