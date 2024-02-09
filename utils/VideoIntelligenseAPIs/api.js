@@ -29,7 +29,6 @@ async function analyzeVideo(
   try {
     const [operation] = await video.annotateVideo(request);
     const results = await operation.promise();
-    console.log("Waiting for operation to complete...");
 
     const annotations = results[0].annotationResults[0];
     const objects = annotations.objectAnnotations;
