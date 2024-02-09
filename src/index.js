@@ -140,7 +140,7 @@ app.get("/api/inspection/:id", async (req, res) => {
     data: {
       missionId: mission.id,
       data: resArray,
-      videoURL: gsLink,
+      videoURL: videoLink,
       videoObjectDetectionData: objectDetectionData,
     },
   });
