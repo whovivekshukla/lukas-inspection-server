@@ -27,6 +27,11 @@ const performInspection = async (mission, logCallback) => {
     const executeWayPointsRes = await executeWayPoints();
     logCallback(executeWayPointsRes);
 
+    resArray.push("Taking Off...");
+    logCallback("Executing Waypoints...");
+    const takeOffRes = await takeOff();
+    logCallback(takeOffRes);
+
     resArray.push("Returning to Launch...");
     logCallback("Returning to Launch...");
     const setRTLRes = await setRTL();
