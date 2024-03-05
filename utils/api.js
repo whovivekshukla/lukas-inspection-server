@@ -28,8 +28,8 @@ const performInspection = async (mission, logCallback) => {
     logCallback(executeWayPointsRes);
 
     resArray.push("Taking Off...");
-    logCallback("Executing Waypoints...");
-    const takeOffRes = await takeOff();
+    logCallback("Taking Off...");
+    const takeOffRes = await takeOff(mission.altitude);
     logCallback(takeOffRes);
 
     resArray.push("Returning to Launch...");
