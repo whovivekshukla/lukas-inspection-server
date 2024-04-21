@@ -2,10 +2,12 @@
   "name": "lukas-inspection-server",
   "version": "1.0.0",
   "license": "MIT",
-  "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "npm install && npx prisma generate && node src/index.js"
-  },
+"scripts": {
+  "dev": "nodemon src/index.js",
+  "start": "node src/index.js",
+  "build": "npm install && npx prisma generate"
+},
+
   "dependencies": {
     "@google-cloud/storage": "^7.7.0",
     "@google-cloud/video-intelligence": "^5.0.2",
